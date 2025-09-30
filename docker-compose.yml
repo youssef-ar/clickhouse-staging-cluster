@@ -1,0 +1,62 @@
+services:
+  ch01:
+    image: "clickhouse/clickhouse-server:latest"
+    user: "101:101"
+    container_name: ch01
+    hostname: ch01
+    volumes:
+      - ./ch01/config.d:/etc/clickhouse-server/config.d
+      - ./ch01/users.d:/etc/clickhouse-server/users.d
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    depends_on:
+      - keeper01
+      - keeper02
+      - keeper03
+
+  ch02:
+    image: "clickhouse/clickhouse-server:latest"
+    user: "101:101"
+    container_name: ch02
+    hostname: ch02
+    volumes:
+      - ./ch02/config.d:/etc/clickhouse-server/config.d
+      - ./ch02/users.d:/etc/clickhouse-server/users.d
+    ports:
+      - "8124:8123"
+      - "9001:9000"
+    depends_on:
+      - keeper01
+      - keeper02
+      - keeper03
+
+  keeper01:
+    image: "clickhouse/clickhouse-keeper:latest-alpine"
+    user: "101:101"
+    container_name: keeper01
+    hostname: keeper01
+    volumes:
+      - ./keeper01/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "9181:9181"
+
+  keeper02:
+    image: "clickhouse/clickhouse-keeper:latest-alpine"
+    user: "101:101"
+    container_name: keeper02
+    hostname: keeper02
+    volumes:
+      - ./keeper02/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "9182:9181"
+
+  keeper03:
+    image: "clickhouse/clickhouse-keeper:latest-alpine"
+    user: "101:101"
+    container_name: keeper03
+    hostname: keeper03
+    volumes:
+      - ./keeper03/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "9183:9181"

@@ -1,0 +1,4 @@
+<clickhouse>
+    <interserver_http_host>ch01</interserver_http_host>
+    <interserver_http_port>9009</interserver_http_port>
+</clickhouse>
