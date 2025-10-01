@@ -10,12 +10,7 @@ services:
     ports:
       - "8123:8123"
       - "9000:9000"
-    command: >
-      /bin/bash -c "
-        mkdir -p /var/lib/clickhouse/tmp /var/lib/clickhouse/access /var/lib/clickhouse/backup /var/log/clickhouse-server &&
-        chown -R 101:101 /var/lib/clickhouse /var/log/clickhouse-server &&
-        /entrypoint.sh
-      "
+
     depends_on:
       - keeper01
       - keeper02
@@ -32,12 +27,7 @@ services:
     ports:
       - "8124:8123"
       - "9001:9000"
-    command: >
-      /bin/bash -c "
-        mkdir -p /var/lib/clickhouse/tmp /var/lib/clickhouse/access /var/lib/clickhouse/backup /var/log/clickhouse-server &&
-        chown -R 101:101 /var/lib/clickhouse /var/log/clickhouse-server &&
-        /entrypoint.sh
-      "
+
     depends_on:
       - keeper01
       - keeper02
@@ -72,3 +62,23 @@ services:
       - ./keeper03/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
     ports:
       - "9183:9181"
+
+  keeper04:
+    image: "clickhouse/clickhouse-keeper:latest-alpine"
+    user: "101:101"
+    container_name: keeper04
+    hostname: keeper04
+    volumes:
+      - ./keeper04/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "9184:9181"
+
+  keeper05:
+    image: "clickhouse/clickhouse-keeper:latest-alpine"
+    user: "101:101"
+    container_name: keeper05
+    hostname: keeper05
+    volumes:
+      - ./keeper05/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "9185:9181"

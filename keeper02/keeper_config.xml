@@ -33,6 +33,16 @@
                 <hostname>keeper03</hostname>
                 <port>9234</port>
             </server>
+            <server>
+                <id>4</id>
+                <hostname>keeper04</hostname>
+                <port>9234</port>
+            </server>
+            <server>
+                <id>5</id>
+                <hostname>keeper05</hostname>
+                <port>9234</port>
+            </server>
         </raft_configuration>
     </keeper_server>
 </clickhouse>
