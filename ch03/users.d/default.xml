@@ -1,0 +1,20 @@
+<clickhouse>
+    <users>
+        <default>
+            <password>stagingpass</password>
+            <networks>
+                <ip>::/0</ip>
+            </networks>
+        </default>
+    </users>
+    <!-- Profiles of settings. -->
+    <profiles>
+        <!-- Default settings. -->
+        <default>
+          <receive_timeout>60000</receive_timeout>
+          <send_timeout>60000</send_timeout>
+          <max_execution_time>60000</max_execution_time>
+          <s3_max_part_number>1000</s3_max_part_number>
+        </default>
+    </profiles>
+</clickhouse>

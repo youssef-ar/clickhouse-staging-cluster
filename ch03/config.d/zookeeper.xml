@@ -1,0 +1,24 @@
+<clickhouse>
+    <zookeeper>
+        <node>
+            <host>keeper01</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>keeper02</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>keeper03</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>keeper04</host>
+            <port>9181</port>
+        </node>
+        <node>
+            <host>keeper05</host>
+            <port>9181</port>
+        </node>
+    </zookeeper>
+</clickhouse>
