@@ -16,8 +16,7 @@ services:
       - keeper01
       - keeper02
       - keeper03
-      - keeper04
-      - keeper05
+
 
   ch02:
     image: "clickhouse/clickhouse-server:latest"
@@ -36,28 +35,8 @@ services:
       - keeper01
       - keeper02
       - keeper03
-      - keeper04
-      - keeper05
 
-  ch03:
-    image: "clickhouse/clickhouse-server:latest"
-    user: "101:101"
-    container_name: ch03
-    hostname: ch03
-    volumes:
-      - ./ch03/config.d:/etc/clickhouse-server/config.d
-      - ./ch03/users.d:/etc/clickhouse-server/users.d
-      - ch03_data:/var/lib/clickhouse
-    ports:
-      - "8129:8123"
-      - "9002:9000"
 
-    depends_on:
-      - keeper01
-      - keeper02
-      - keeper03
-      - keeper04
-      - keeper05
 
   keeper01:
     image: "clickhouse/clickhouse-keeper:latest-alpine"
@@ -92,34 +71,9 @@ services:
     ports:
       - "9183:9181"
 
-  keeper04:
-    image: clickhouse/clickhouse-keeper:latest-alpine
-    user: "101:101"
-    container_name: keeper04
-    hostname: keeper04
-    volumes:
-      - ./keeper04/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
-      - keeper04_data:/var/lib/clickhouse-keeper
-    ports:
-      - "9184:9181"
-
-  keeper05:
-    image: "clickhouse/clickhouse-keeper:latest-alpine"
-    user: "101:101"
-    container_name: keeper05
-    hostname: keeper05
-    volumes:
-      - ./keeper05/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
-      - keeper05_data:/var/lib/clickhouse-keeper
-    ports:
-      - "9185:9181"
-
 volumes:
   ch01_data:
   ch02_data:
-  ch03_data:
   keeper01_data:
   keeper02_data:
   keeper03_data:
-  keeper04_data:
-  keeper05_data:
