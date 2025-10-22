@@ -38,7 +38,7 @@ echo "Restoring volumes..."
 for volume in clickhouse-staging-cluster_ch01_data clickhouse-staging-cluster_ch02_data clickhouse-staging-cluster_keeper01_data clickhouse-staging-cluster_keeper02_data clickhouse-staging-cluster_keeper03_data; do
     if [ -f "${volume}.tar.gz" ]; then
         echo "Restoring $volume..."
-        docker run --rm --user 101:101 -v $volume:/data -v $(pwd):/backup alpine \
+        docker run --rm  -v $volume:/data -v $(pwd):/backup alpine \
             tar xzf /backup/${volume}.tar.gz -C /data
     else
         echo "Backup for $volume not found, skipping..."
