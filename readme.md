@@ -134,6 +134,52 @@ Your data will be restored only on ch02
 
 ![alt text](image.png)
 ---
+### 6. Fix Replication — Run the Migration Script
+ 
+The restored cluster has a replication bug: all tables were created with `{uuid}` in their
+`ReplicatedMergeTree` engine path. Because each node generates its own local UUID at table
+creation time, `ch01` and `ch02` register under different Keeper paths and never replicate
+to each other.
+ 
+The migration script fixes this by rebuilding each table with a correct shared Keeper path.
+ 
+#### 6.1 Copy the script into the containers
+ 
+```bash
+docker cp scripts/migrate_replicated_tables.sh ch01:/tmp/
+docker cp scripts/migrate_replicated_tables.sh ch02:/tmp/
+```
+ 
+#### 6.2 Run on ch01
+ 
+```bash
+docker exec -u root -it ch01 bash /tmp/migrate_replicated_tables.sh \
+    --host localhost \
+    --password password
+```
+ 
+ 
+#### 6.3 run on ch02
+ 
+```bash
+docker exec -u root -it ch02 bash /tmp/migrate_replicated_tables.sh \
+    --host localhost \
+    --password password
+```
+ 
+ 
+#### 6.4 Verify replication is working
+ 
+**Check all Keeper paths are now correct and identical on both nodes:**
+ 
+```sql
+-- Run on both ch01 and ch02 — output must match
+SELECT database, table, zookeeper_path, replica_name
+FROM system.replicas
+ORDER BY database, table;
+```
+ 
+---
 
 ## 📚 References
 
